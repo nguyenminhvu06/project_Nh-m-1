@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  webapp:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: student_analysis_app
+    ports:
+      - "8501:8501"
+    volumes:
+      - ../data:/app/data:ro
+      - ../app:/app/app:ro
+    environment:
+      - PYTHONUNBUFFERED=1
+    networks:
+      - app_network
+    restart: unless-stopped
+
+networks:
+  app_network:
+    driver: bridge
